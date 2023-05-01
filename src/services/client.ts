@@ -1,4 +1,6 @@
 import Airtable from "airtable";
+import { FieldSet } from "airtable/lib/field_set";
+import { QueryParams } from "airtable/lib/query_params";
 
 const apiKey = import.meta.env.VITE_AIRTABLE_TOKEN;
 const bd = import.meta.env.VITE_AIRTABLE_BD;
@@ -8,10 +10,11 @@ Airtable.configure({ apiKey });
 const base = Airtable.base(bd);
 
 export class Client<T> {
-  all(table: string): Promise<T[]> {
+  all(table: string, options: QueryParams<FieldSet> = {}): Promise<T[]> {
     return base(table)
       .select({
         view: "Grid view",
+        ...options,
       })
       .all()
       .then((items): T[] => {

@@ -13,9 +13,11 @@ export interface Product {
 
 export const Products = {
   get: (): Promise<Product[]> => {
-    return client.all("products").then((products) => {
-      return products;
-    });
+    return client
+      .all("products", { sort: [{ field: "updated_at", direction: "desc" }] })
+      .then((products) => {
+        return products;
+      });
   },
   create: (product: Product): Promise<Product[]> => {
     return client.create(product, "products").then((product) => {

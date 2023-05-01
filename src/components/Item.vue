@@ -11,7 +11,7 @@ const { item } = defineProps(["item"]);
       </div>
       <small>Unit price: {{ item.price }} $</small>
     </div>
-    <div class="sub-total">{{ item.price * item.quantity }} $</div>
+    <div class="sub-total">{{ (item.price * item.quantity).toFixed(2) }} $</div>
   </li>
 </template>
 

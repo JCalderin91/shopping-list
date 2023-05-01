@@ -1,9 +1,31 @@
 <script setup lang="ts">
+import { onMounted, ref } from "vue";
+
 const { item } = defineProps(["item"]);
+const isSelected = ref(false);
+const toggleSelected = (uuid: string) => {
+  let itemsSelected = JSON.parse(localStorage.getItem("itemsSelected") || "[]");
+  if (!itemsSelected.includes(uuid)) {
+    itemsSelected.push(uuid);
+    isSelected.value = true;
+  } else {
+    itemsSelected = itemsSelected.filter((item: string) => item !== uuid);
+    isSelected.value = false;
+  }
+  localStorage.setItem("itemsSelected", JSON.stringify(itemsSelected));
+};
+
+onMounted(() => {
+  let itemsSelected = JSON.parse(localStorage.getItem("itemsSelected") || "[]");
+  isSelected.value = itemsSelected.includes(item.uuid);
+});
 </script>
 
 <template>
-  <li class="item">
+  <li
+    @click="toggleSelected(item.uuid)"
+    :class="`${isSelected ? 'isSelected' : ''} item`"
+  >
     <div class="information">
       <div class="title">
         <strong>{{ item.name }}:</strong> {{ item.quantity }}
@@ -25,6 +47,10 @@ const { item } = defineProps(["item"]);
   display: flex;
   justify-content: space-between;
   align-items: center;
+  &.isSelected {
+    text-decoration: line-through;
+    opacity: 0.6;
+  }
   .information {
     .title {
       font-size: 1.1rem;

@@ -26,7 +26,7 @@ const lastUpdatedTime = computed(() => {
     const date = new Date(validProducts.value[0].updated_at as string);
     return getRelativeTimeString(date);
   }
-  return "---";
+  return false;
 });
 
 onMounted(() => {

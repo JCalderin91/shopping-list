@@ -19,6 +19,8 @@
     "sass": "^1.62.1",
     "typescript": "^5.0.2",
     "vite": "^4.3.2",
-    "vue-tsc": "^1.4.2"
+    "vite-plugin-pwa": "^0.14.7",
+    "vue-tsc": "^1.4.2",
+    "workbox-precaching": "^6.5.4"
   }
 }
